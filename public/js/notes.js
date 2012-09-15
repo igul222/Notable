@@ -92,6 +92,11 @@ function addLine(id, timestamp, inputline, addedlocally) {
     "</td></tr>"
   );
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
+
+  // very sophisticated keyword extraction algorithm >_>
+  var keyword = inputline.split(" ").sort(
+    function(word) { return word.length })[0];
+  console.log(keyword);
 }
 
 $(document).ready(function() {
