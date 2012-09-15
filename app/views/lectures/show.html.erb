@@ -1,9 +1,34 @@
 <%= javascript_tag "window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';" %>
 <div class="row">
   <div class="span12">
+
+    <h1>Notes</h1>
     <table id="notelog" class="table table-striped">
-      <tr><th>timestamp</th><th></th><th style="width:80%">content</th></tr>
+    <tr id="headerrow">
+      <th>timestamp</th>
+      <th><div class="btn-group">
+        <button class="btn dropdown-toggle" 
+          data-toggle="dropdown" 
+          href="#"
+        >All</button>
+      <ul class="dropdown-menu">
+        <li><a id="showall"
+          data-toggle="dropdown" 
+          href="#"
+        ></i>All</a></li>
+        <li><a id="showimportant"
+          data-toggle="dropdown" 
+          href="#"
+        ><i class="icon-star"></i> Important</a></li>
+        <li><a id="showconfusing"
+          data-toggle="dropdown" 
+          href="#"
+        ><i class="icon-question-sign"></i> Confusing</a></li>
+      </ul>
+      </div></th>
+      <th style="width:80%">content</th></tr>
     </table>
-    <input id="noteinput" type="text" style="width:100%"></input>
+    <input id="noteinput" placeholder="Type your notes here and press enter..." type="text" style="width:100%"></input>
+
   </div>
 </div>
