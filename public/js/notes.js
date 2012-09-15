@@ -33,7 +33,7 @@ function pollForUpdates() {
     if (newlines) {
       for (var i = 0; i < newlines.length; i++) {
         // if there aren't any lines already with  the same id
-        if (lines.map(function(oldline) {
+        if (lines.filter(function(oldline) {
           return (oldline.id === newlines[i].id);
         }).length === 0) {
           // add line to log
