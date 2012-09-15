@@ -40,7 +40,7 @@ function pollForUpdates() {
   });
   lastupdatetimestamp = Date.now();
   // check again in 1 second
-  window.setTimeout(this, 1000);
+  window.setTimeout(pollForUpdates, 1000);
 }
 
 function addLine(id, timestamp, inputline) {
