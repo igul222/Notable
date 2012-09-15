@@ -46,12 +46,14 @@ function pollForUpdates() {
           addLine(
             newlines[i].id, 
             new Date(newlines[i].timestamp), 
-            newlines[i].text
+            newlines[i].text,
+            false
           );
         }
       }
     }
   }, "json");
+  $('.addedlocally').hide();
   lastupdatetimestamp = Date.now();
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
@@ -64,12 +66,13 @@ function sendLineToServer(text) {
   });
 }
 
-function addLine(id, timestamp, inputline) {
+function addLine(id, timestamp, inputline, addedlocally) {
   // local only! this also gets called when we get a line back from the server
   var classes = "";
   var rowclasses= "";
   var important = "";
 
+  if (addedlocally) rowclasses = rowclasses + " addedlocally";
   if (inputline.indexOf("!!") > -1) {
     important = "<i class=\"icon-star\"></i>";
     classes = classes + " importantline";
@@ -99,7 +102,7 @@ $(document).ready(function() {
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
       // id only applies to things pulled from surver
-      addLine(null, timestamp, inputline);
+      addLine(null, timestamp, inputline, true);
       $('#noteinput').val('');
       sendLineToServer(inputline);
     }
