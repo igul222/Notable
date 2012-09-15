@@ -26,18 +26,26 @@ function setShownTypes(type) {
   }
   $('#headerrow').show();
 }
-
 function pollForUpdates() {
   var url = window.lecture_notes_url;
-  console.log('updating');
   $.get(url, {since: lastupdatetimestamp}, function(newlines) {
-    for (var i = 0; i < newlines.length; i++) {
-      if (!lines.map(function(oldline) {
-        return (oldline.id === newlines[i].id);
-      }))
-      addLine(newlines[i].id, newlines[i].timestamp, newlines[i].text);
+    // if we get data back:
+    if (newlines) {
+      for (var i = 0; i < newlines.length; i++) {
+        // if there aren't any lines already with  the same id
+        if (lines.map(function(oldline) {
+          return (oldline.id === newlines[i].id);
+        }).length === 0) {
+          // add line to log
+          addLine(
+            newlines[i].id, 
+            new Date(newlines[i].timestamp), 
+            newlines[i].text
+          );
+        }
+      }
     }
-  });
+  }, "json");
   lastupdatetimestamp = Date.now();
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
