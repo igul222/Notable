@@ -7,6 +7,9 @@ function getRelevantLines(timestamp, s) {
   ];
 }
 
+/**
+ * handles the dropdown to hide certain types of lines
+ */
 function setShownTypes(type) {
   switch (type) {
     case 'all':
@@ -24,36 +27,56 @@ function setShownTypes(type) {
   $('#headerrow').show();
 }
 
+function pollForUpdates() {
+  var url = Window.lecture_notes_url;
+  $.get(url, {since: lastupdatetimestamp}, function(newlines) {
+    for (var i = 0; i < newlines.length; i++) {
+      if (!lines.map(function(oldline) {
+        return (oldline.id === newlines[i].id);
+      }))
+      addLine(newlines[i].id, newlines[i].timestamp, newlines[i].text);
+    }
+  });
+  lastupdatetimestamp = Date.now();
+  // check again in 1 second
+  Window.setTimeout(this, 1000);
+}
+
+function addLine(id, timestamp, inputline) {
+  var classes = "";
+  var rowclasses= "";
+  var important = "";
+
+  if (inputline.indexOf("!!") > -1) {
+    important = "<i class=\"icon-star\"></i>";
+    classes = classes + " importantline";
+    rowclasses = rowclasses + " importantrow";
+  }
+  var confusing = "";
+  if (inputline.indexOf("??") > -1) {
+    confusing = "<i class=\"icon-question-sign\"></i>";
+    classes = classes + " text-error";
+    rowclasses = rowclasses + " confusingrow";
+  }
+  $('#notelog').append(
+    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + timestamp.toLocaleTimeString() +
+    "</td><td>" + confusing + important + 
+    "</td><td class=\"" + classes + "\">" +
+    inputline +
+    "</td></tr>"
+  );
+  lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
+}
+
 $(document).ready(function() {
-  var linenum = 0;
-  var lines = [];
+  lines = []; // GLOBAL. :(
+  lastupdatetimestamp = 0;
   $('#noteinput').keypress(function(e) {
     var inputline = $('#noteinput').val();
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
-      var classes = "";
-      var rowclasses= "";
-      var important = "";
-      if (inputline.indexOf("!!") > -1) {
-        important = "<i class=\"icon-star\"></i>";
-        classes = classes + " importantline";
-        rowclasses = rowclasses + " importantrow";
-      }
-      var confusing = "";
-      if (inputline.indexOf("??") > -1) {
-        confusing = "<i class=\"icon-question-sign\"></i>";
-        classes = classes + " text-error";
-        rowclasses = rowclasses + " confusingrow";
-      }
-      $('#notelog').append(
-        "<tr class=\"noteline" + rowclasses + "\" id=\"row"+linenum+"\"><td>" + timestamp.toLocaleTimeString() +
-        "</td><td>" + confusing + important + 
-        "</td><td class=\"" + classes + "\">" +
-        inputline +
-        "</td></tr>"
-      );
-      lines[linenum] = {timestamp: timestamp, text: inputline};
-      linenum++;
+        // id only applies to things pulled from surver
+        addLine(null, timestamp, inputline);
       $('#noteinput').val('');
     }
   });
