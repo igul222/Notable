@@ -43,7 +43,15 @@ function pollForUpdates() {
   window.setTimeout(pollForUpdates, 1000);
 }
 
+function sendLineToServer(text) {
+  var url = window.lecture_notes_url;
+  $.post(url, {text: text}, function() {
+    console.log('sent line: '+text);
+  });
+}
+
 function addLine(id, timestamp, inputline) {
+  // local only! this also gets called when we get a line back from the server
   var classes = "";
   var rowclasses= "";
   var important = "";
@@ -76,9 +84,10 @@ $(document).ready(function() {
     var inputline = $('#noteinput').val();
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
-        // id only applies to things pulled from surver
-        addLine(null, timestamp, inputline);
+      // id only applies to things pulled from surver
+      addLine(null, timestamp, inputline);
       $('#noteinput').val('');
+      sendLineToServer(inputline);
     }
   });
   $(document).on("click", ".noteline", function(e) {
