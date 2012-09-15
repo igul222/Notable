@@ -17,6 +17,12 @@
 
 <div class="row">
   <div class="span12">
+    <%= button_to '<i class="icon-plus"></i> New lecture', new_lecture_path %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
 
     <% for lecture in @lectures %>
       <div class="lecture">
