@@ -14,12 +14,21 @@ $(document).ready(function() {
     var inputline = $('#noteinput').val();
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
-      var important = (inputline.indexOf("!!") < 0) ? "" : "<i class=\"icon-star\"></i>";
-      var confusing = (inputline.indexOf("??") < 0) ? "" : "<i class=\"icon-question-sign\"></i>";
+      var classes = "";
+      var important = "";
+      if (inputline.indexOf("!!") > -1) {
+        important = "<i class=\"icon-star\"></i>";
+        classes = classes + " importantline";
+      }
+      var confusing = "";
+      if (inputline.indexOf("??") > 0) {
+        confusing = "<i class=\"icon-question-sign\"></i>";
+        classes = classes + " text-error";
+      }
       $('#notelog').append(
         "<tr class=\"noteline\" id=\"row"+linenum+"\"><td>" + timestamp.toLocaleTimeString() +
         "</td><td>" + confusing + important + 
-        "</td><td>" +
+        "</td><td class=\"" + classes + "\">" +
         inputline +
         "</td></tr>"
       );
@@ -35,7 +44,7 @@ $(document).ready(function() {
     var clickedline = lines[id.substring(3)];
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
-      target.addClass('text-info');
+      target.addClass('selectedline');
       var before = context.filter(function (line) {
         return(line.timestamp < clickedline.timestamp);
       });
