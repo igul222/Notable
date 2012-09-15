@@ -115,4 +115,5 @@ $(document).ready(function() {
   $('#showall').on('click', function() {setShownTypes('all')});
   $('#showimportant').on('click', function() {setShownTypes('important')});
   $('#showconfusing').on('click', function() {setShownTypes('confusing')});
+  pollForUpdates();
 });
