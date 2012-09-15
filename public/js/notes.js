@@ -33,9 +33,19 @@ $(document).ready(function() {
       context.before.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).before(
-          "<tr class=\"muted\"><td>" +timestamp.toLocaleTimeString()+"</td><td></td><td>"+ line.text + " -- " + line.user + "</td></tr>"
+          "<tr class=\"muted\"><td>" + 
+          timestamp.toLocaleTimeString() + 
+          "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
-  }
-    });
+      context.after.map(function(line) {
+        var timestamp = new Date(line.timestamp);
+        $('#'+e.currentTarget.id).after(
+          "<tr class=\"muted\"><td>" + 
+          timestamp.toLocaleTimeString() + 
+          "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
+        );
+      });
+    }
+  });
 });
