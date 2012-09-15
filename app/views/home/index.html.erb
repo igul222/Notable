@@ -1,1 +1,5 @@
 <p>This is the home page...</p>
+
+<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+<br/>
+<%= link_to 'sign up', new_user_registration_path %> | <%= link_to 'log in', new_user_session_path %>
