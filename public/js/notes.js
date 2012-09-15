@@ -139,9 +139,9 @@ console.log('timestamp: '+line.timestamp);
       after.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).after(
-          "<tr class=\"muted\"><td>" + 
+          "<tr class=\"muted\"><td></td><td>" + 
           timestamp.toLocaleTimeString() + 
-          "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
+          "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
     }
