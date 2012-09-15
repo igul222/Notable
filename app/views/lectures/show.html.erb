@@ -1,4 +1,7 @@
-<%= javascript_tag "window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';" %>
+<%= javascript_tag "
+window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';
+window.lecture_notes_url = '#{create_lecture_note_url(@lecture)}';
+" %>
 <div class="row">
   <div class="span12">
 
