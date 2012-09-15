@@ -2,7 +2,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  if Rails.env == :production
+  if Rails.env == 'production'
     config.omniauth :facebook, "115369605280693", "1d6a704d12e746d150e5f70936a34e69",
       {:scope => 'email, offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} 
   else
