@@ -7,6 +7,23 @@ function getRelevantLines(timestamp, s) {
   ];
 }
 
+function setShownTypes(type) {
+  switch (type) {
+    case 'all':
+       $('tr').show();
+    break;
+    case 'important':
+      $('tr').hide();
+      $('.importantrow').show();
+    break;
+    case 'confusing':
+      $('tr').hide();
+      $('.confusingrow').show();
+    break;
+  }
+  $('#headerrow').show();
+}
+
 $(document).ready(function() {
   var linenum = 0;
   var lines = [];
@@ -14,12 +31,24 @@ $(document).ready(function() {
     var inputline = $('#noteinput').val();
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
-      var important = (inputline.indexOf("!!") < 0) ? "" : "<i class=\"icon-star\"></i>";
-      var confusing = (inputline.indexOf("??") < 0) ? "" : "<i class=\"icon-question-sign\"></i>";
+      var classes = "";
+      var rowclasses= "";
+      var important = "";
+      if (inputline.indexOf("!!") > -1) {
+        important = "<i class=\"icon-star\"></i>";
+        classes = classes + " importantline";
+        rowclasses = rowclasses + " importantrow";
+      }
+      var confusing = "";
+      if (inputline.indexOf("??") > -1) {
+        confusing = "<i class=\"icon-question-sign\"></i>";
+        classes = classes + " text-error";
+        rowclasses = rowclasses + " confusingrow";
+      }
       $('#notelog').append(
-        "<tr class=\"noteline\" id=\"row"+linenum+"\"><td>" + timestamp.toLocaleTimeString() +
+        "<tr class=\"noteline" + rowclasses + "\" id=\"row"+linenum+"\"><td>" + timestamp.toLocaleTimeString() +
         "</td><td>" + confusing + important + 
-        "</td><td>" +
+        "</td><td class=\"" + classes + "\">" +
         inputline +
         "</td></tr>"
       );
@@ -35,7 +64,7 @@ $(document).ready(function() {
     var clickedline = lines[id.substring(3)];
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
-      target.addClass('text-info');
+      target.addClass('selectedline');
       var before = context.filter(function (line) {
         return(line.timestamp < clickedline.timestamp);
       });
@@ -60,4 +89,7 @@ $(document).ready(function() {
       });
     }
   });
+  $('#showall').on('click', function() {setShownTypes('all')});
+  $('#showimportant').on('click', function() {setShownTypes('important')});
+  $('#showconfusing').on('click', function() {setShownTypes('confusing')});
 });
