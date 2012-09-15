@@ -115,6 +115,7 @@ $(document).ready(function() {
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
       target.addClass('selectedline');
+console.log('timestamp: '+line.timestamp);
       var before = context.filter(function (line) {
         return(line.timestamp < clickedline.timestamp);
       });
