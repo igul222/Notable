@@ -16,7 +16,13 @@
 </div>
 
 <div class="row">
-	<div class="span3">
+  <div class="span12">
+    <%= button_to '<i class="icon-plus"></i> New lecture', new_lecture_path %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span3">
 		<%= form_for(user) do |f| %>
 			<%= f.label user.phone_number %>
 			<%= f.text_field user.phone_number %>
@@ -24,7 +30,6 @@
 		<% end %>
 	</div>	
   <div class="span9">
-
     <% for lecture in @lectures %>
       <div class="lecture">
         <%= link_to lecture.title, lecture_path(lecture)%>

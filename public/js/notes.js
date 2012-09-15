@@ -116,10 +116,12 @@ $(document).ready(function() {
     if (context) {
       target.addClass('selectedline');
       var before = context.filter(function (line) {
-        return(line.timestamp < clickedline.timestamp);
+console.log('timestamp: '+(line.timestamp+0));
+        return(+line.timestamp < clickedline.timestamp);
       });
       var after = context.filter(function (line) {
-        return(line.timestamp > clickedline.timestamp);
+console.log('timestamp: '+line.timestamp);
+        return(+line.timestamp > clickedline.timestamp);
       });
       before.map(function(line) {
         var timestamp = new Date(line.timestamp);
