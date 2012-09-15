@@ -60,7 +60,7 @@ $(document).ready(function() {
   $(document).on("click", ".noteline", function(e) {
     var id = e.currentTarget.id;
     var target = $('#'+id);
-    if (target.hasClass('text-info')) return;
+    if (target.hasClass('selectedline')) return;
     var clickedline = lines[id.substring(3)];
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
