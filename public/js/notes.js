@@ -98,7 +98,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
     function(a, b) { return b.length - a.length })[0];
   console.log(keyword);
   $.post(
-    'http://data.nature.com/query',
+    'http://api.nature.com/query',
     { query: 'select * where { ?doi a npg:Article . ?doi dc:title ?term . ?term npgx:any "' + keyword + '" . }',
      output: 'sparql_json' },
     function (data) {
