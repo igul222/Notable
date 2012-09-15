@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
 
   has_many :lectures
   
-  validate :validate_and_modify_phone_number
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :provider, :uid
@@ -37,27 +35,8 @@ class User < ActiveRecord::Base
     end
   end
   
-  def validate_and_modify_phone_number
-    if is_numeric(phone_number)
-      add_country_code(phone_number)
-      true
-    else
-      phonenumber=phonenumber.gsub('')[0-9]
-      add_country_code(phone_number)
-    end
-  end
-  
-  def is_numeric(number)
-    true if number=~ /^[0-9]+$/
-    rescue false
-  end
-  
-  def add_country_code(number)
-    if number[0]='1'
-       number="+"+number
-    else
-       number="+1"+numbers
-    end
+  def phone_number=(new_phone_number)
+    super.phone_number = '+1'+new_phone_number.gsub(/[^0-9]/,'')
   end
 
 end
