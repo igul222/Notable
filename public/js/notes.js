@@ -97,6 +97,15 @@ function addLine(id, timestamp, inputline, addedlocally) {
   var keyword = inputline.split(" ").sort(
     function(a, b) { return b.length - a.length })[0];
   console.log(keyword);
+  $.post(
+    'data.nature.com/query',
+    { query: 'select * where { ?doi a npg:Article . ?doi dc:title ?term . ?term npgx:any "' + keyword + '" . }',
+     output: 'sparql_json' },
+    function (data) {
+     console.log(data);
+    },
+    'json'
+  );
 }
 
 $(document).ready(function() {
