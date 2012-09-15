@@ -38,7 +38,7 @@ function pollForUpdates() {
     // if we get data back:
     if (newlines) {
       for (var i = 0; i < newlines.length; i++) {
-        // if there aren't any lines already with  the same id
+        // if there aren't any lines already with the same id
         if (lines.filter(function(oldline) {
           return (oldline.id === newlines[i].id);
         }).length === 0) {
