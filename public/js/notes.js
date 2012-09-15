@@ -11,8 +11,8 @@ $(document).ready(function() {
   var linenum = 0;
   var lines = [];
   $('#noteinput').keypress(function(e) {
-    if (e.which === 13) {
-      var inputline = $('#noteinput').val();
+    var inputline = $('#noteinput').val();
+    if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
       var important = (inputline.indexOf("!!") < 0) ? "" : "<i class=\"icon-star\"></i>";
       var confusing = (inputline.indexOf("??") < 0) ? "" : "<i class=\"icon-question-sign\"></i>";
