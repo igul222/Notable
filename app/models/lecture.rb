@@ -5,4 +5,5 @@ class Lecture < ActiveRecord::Base
   validates :title, :presence => true, :length => {:minimum => 2}
   
   attr_accessible :title
+
 end

@@ -2,7 +2,9 @@ Pennapp::Application.routes.draw do
 
   root :to => "home#index"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  resources :lectures
+  resources :lectures do
+    resources :notes
+  end
 
   match 'twilio/process_sms' => 'twilio#process_sms'
 
