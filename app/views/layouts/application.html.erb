@@ -21,6 +21,11 @@
     <div class="navbar-inner">
       <div class="container">
         <a href="#" class="brand">Notable</a>
+        <% if user_signed_in? %>
+        	<%= link_to "Sign Out", destroy_user_session_path, :class=>'btn pull-right' %>
+        <% else %>
+        	<%= link_to "Sign In", user_omniauth_authorize_path(:facebook), :class=>'btn pull-right' %>
+        <% end %>
       </div>
     </div>
   </div>
