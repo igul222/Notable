@@ -115,11 +115,12 @@ $(document).ready(function() {
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
       target.addClass('selectedline');
-console.log('timestamp: '+line.timestamp);
       var before = context.filter(function (line) {
+console.log('timestamp: '+line.timestamp);
         return(line.timestamp < clickedline.timestamp);
       });
       var after = context.filter(function (line) {
+console.log('timestamp: '+line.timestamp);
         return(line.timestamp > clickedline.timestamp);
       });
       before.map(function(line) {
