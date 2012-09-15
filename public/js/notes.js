@@ -1,5 +1,10 @@
 function getRelevantLines(timestamp, s) {
-  return {before: [{timestamp: 1347691044295, user: 'Everyone', text: 'arglegarble'},{timestamp: 1347691044999, user: 'Everyone', text: 'This makes complete sense'}], after: [{timestamp: 1347691041111, user: 'Bob', text: 'no it doesn\'t'}]};
+  return [
+    {timestamp: 1347691044295, user: 'Everyone', text: 'arglegarble'},
+    {timestamp: 1347691044999, user: 'Everyone', text: 'This makes complete sense'},
+    {timestamp: 1347691041111, user: 'Bob', text: 'no it doesn\'t'},
+    {timestamp: 1347791041111, user: 'Bob', text: 'I\'M FROM THE FUTURE'}
+  ];
 }
 
 $(document).ready(function() {
@@ -27,10 +32,17 @@ $(document).ready(function() {
     var id = e.currentTarget.id;
     var target = $('#'+id);
     if (target.hasClass('text-info')) return;
-    var context = getRelevantLines(lines[id.substring(3)].timestamp, lines[id.substring(3)].text);
+    var clickedline = lines[id.substring(3)];
+    var context = getRelevantLines(clickedline.timestamp, clickedline.text);
     if (context) {
       target.addClass('text-info');
-      context.before.map(function(line) {
+      var before = context.filter(function (line) {
+        return(line.timestamp < clickedline.timestamp);
+      });
+      var after = context.filter(function (line) {
+        return(line.timestamp > clickedline.timestamp);
+      });
+      before.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).before(
           "<tr class=\"muted\"><td>" + 
@@ -38,7 +50,7 @@ $(document).ready(function() {
           "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
-      context.after.map(function(line) {
+      after.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).after(
           "<tr class=\"muted\"><td>" + 
