@@ -95,7 +95,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
 
   // very sophisticated keyword extraction algorithm >_>
   var keyword = inputline.split(" ").sort(
-    function(word) { return word.length })[0];
+    function(a, b) { return b.length - a.length })[0];
   console.log(keyword);
 }
 
