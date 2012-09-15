@@ -29,6 +29,7 @@ function setShownTypes(type) {
 
 function pollForUpdates() {
   var url = Window.lecture_notes_url;
+  console.log('updating');
   $.get(url, {since: lastupdatetimestamp}, function(newlines) {
     for (var i = 0; i < newlines.length; i++) {
       if (!lines.map(function(oldline) {
@@ -115,4 +116,5 @@ $(document).ready(function() {
   $('#showall').on('click', function() {setShownTypes('all')});
   $('#showimportant').on('click', function() {setShownTypes('important')});
   $('#showconfusing').on('click', function() {setShownTypes('confusing')});
+  pollForUpdates();
 });
