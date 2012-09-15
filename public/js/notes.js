@@ -72,7 +72,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
   var rowclasses= "";
   var important = "";
 
-  if (addedlocally) classes = classes + " addedlocally";
+  if (addedlocally) rowclasses = rowclasses + " addedlocally";
   if (inputline.indexOf("!!") > -1) {
     important = "<i class=\"icon-star\"></i>";
     classes = classes + " importantline";
