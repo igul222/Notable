@@ -54,7 +54,7 @@ function pollForUpdates() {
     }
   }, "json");
   $('.addedlocally').hide();
-  lastupdatetimestamp = Date.now();
+  lastupdatetimestamp = Date.now() - 10000;
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
 }
