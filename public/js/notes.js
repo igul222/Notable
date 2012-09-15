@@ -85,8 +85,8 @@ function addLine(id, timestamp, inputline, addedlocally) {
     rowclasses = rowclasses + " confusingrow";
   }
   $('#notelog').append(
-    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + timestamp.toLocaleTimeString() +
-    "</td><td>" + confusing + important + 
+    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
+    "</td><td>" + timestamp.toLocaleTimeString() +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"

@@ -1,3 +1,14 @@
+<style type="text/css">
+.lecture {
+  padding: 20px;
+  border-bottom: 1px solid #999;
+}
+.lecture a {
+  font-size: 150%;
+  font-weight: bold;
+}
+</style>
+
 <div class="row">
   <div class="span12">
     <h1>Your Lectures</h1>
@@ -6,12 +17,13 @@
 
 <div class="row">
   <div class="span12">
-  	<ul class="nav nav-pills nav-stacked">
+
     <% for lecture in @lectures %>
-    <li>
-      <%= link_to lecture.title, lecture_path(lecture)%>
+      <div class="lecture">
+        <%= link_to lecture.title, lecture_path(lecture)%>
+        <div class="details"><%= pluralize lecture.notes.count, 'note' %>, created <%= time_ago_in_words lecture.created_at %> ago</div>
+      </div>
     <% end %>
-    </li>
-    </ul>
+
   </div>
 </div>
