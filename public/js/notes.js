@@ -1,3 +1,9 @@
+$.ajaxSetup({
+  beforeSend: function(xhr) {
+    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  }
+});
+
 function getRelevantLines(timestamp, s) {
   return [
     {timestamp: 1347691044295, user: 'Everyone', text: 'arglegarble'},
