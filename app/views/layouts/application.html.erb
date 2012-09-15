@@ -13,7 +13,7 @@
   
   <% [:alert, :notice].each do |key| %>
     <% if flash[key] %>
-      <p class="alert"><%= flash[:key] %></p>
+      <p class="alert"><%= flash[key] %></p>
     <% end %>
   <% end %>
 
@@ -25,9 +25,11 @@
     </div>
   </div>
 
-  <br><br><br>
+  <br/><br/><br/>
 
-  <%= yield %>
+  <div class="container">
+    <%= yield %>
+  </div>
 
 </body>
 </html>

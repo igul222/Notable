@@ -1,10 +1,10 @@
-<div class="container">
+<div class="row">
   <div class="span12">
     <h1>Your Lectures</h1>
   </div>
 </div>
 
-<div class="container">
+<div class="row">
   <div class="span12">
     <% for lecture in @lectures %>
       <%= link_to lecture.title, lecture_path(lecture) %>
