@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pennapp</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <title>Notable</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <%= csrf_meta_tags %>
+  
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/notes.js"></script>
 </head>
 <body>
+  
+  <% [:alert, :notice].each do |key| %>
+    <% if flash[key] %>
+      <p class="alert"><%= flash[:key] %></p>
+    <% end %>
+  <% end %>
 
-<h1>Notable</h1>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a href="#" class="brand">Notable</a>
+      </div>
+    </div>
+  </div>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+  <br><br><br>
 
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
