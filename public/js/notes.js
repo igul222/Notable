@@ -28,7 +28,7 @@ function setShownTypes(type) {
 }
 
 function pollForUpdates() {
-  var url = Window.lecture_notes_url;
+  var url = window.lecture_notes_url;
   console.log('updating');
   $.get(url, {since: lastupdatetimestamp}, function(newlines) {
     for (var i = 0; i < newlines.length; i++) {
@@ -40,7 +40,7 @@ function pollForUpdates() {
   });
   lastupdatetimestamp = Date.now();
   // check again in 1 second
-  Window.setTimeout(this, 1000);
+  window.setTimeout(this, 1000);
 }
 
 function addLine(id, timestamp, inputline) {
