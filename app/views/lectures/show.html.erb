@@ -4,10 +4,11 @@ window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';
 <div class="row">
   <div class="span12">
 
-    <h1>Notes</h1>
+    <br><br>
+    <h1><%= @lecture.title %></h1>
+        <br><br>
     <table id="notelog" class="table table-striped">
     <tr id="headerrow">
-      <th>timestamp</th>
       <th><div class="btn-group">
         <button class="btn dropdown-toggle" 
           data-toggle="dropdown" 
@@ -28,9 +29,10 @@ window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';
         ><i class="icon-question-sign"></i> Confusing</a></li>
       </ul>
       </div></th>
+      <th>timestamp</th>
       <th style="width:80%">content</th></tr>
     </table>
-    <input id="noteinput" placeholder="Type your notes here and press enter..." type="text" style="width:100%"></input>
+    <input id="noteinput" placeholder="Type your notes here and press enter..." type="text" style="width:925px"></input>
 
   </div>
 </div>

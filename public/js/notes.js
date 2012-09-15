@@ -1,3 +1,9 @@
+$.ajaxSetup({
+  beforeSend: function(xhr) {
+    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  }
+});
+
 function getRelevantLines(timestamp, s) {
   return [
     {timestamp: 1347691044295, user: 'Everyone', text: 'arglegarble'},
@@ -26,18 +32,28 @@ function setShownTypes(type) {
   }
   $('#headerrow').show();
 }
-
 function pollForUpdates() {
   var url = window.lecture_notes_url;
-  console.log('updating');
   $.get(url, {since: lastupdatetimestamp}, function(newlines) {
-    for (var i = 0; i < newlines.length; i++) {
-      if (!lines.map(function(oldline) {
-        return (oldline.id === newlines[i].id);
-      }))
-      addLine(newlines[i].id, newlines[i].timestamp, newlines[i].text);
+    // if we get data back:
+    if (newlines) {
+      for (var i = 0; i < newlines.length; i++) {
+        // if there aren't any lines already with  the same id
+        if (lines.filter(function(oldline) {
+          return (oldline.id === newlines[i].id);
+        }).length === 0) {
+          // add line to log
+          addLine(
+            newlines[i].id, 
+            new Date(newlines[i].timestamp), 
+            newlines[i].text,
+            false
+          );
+        }
+      }
     }
-  });
+  }, "json");
+  $('.addedlocally').hide();
   lastupdatetimestamp = Date.now();
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
@@ -50,12 +66,13 @@ function sendLineToServer(text) {
   });
 }
 
-function addLine(id, timestamp, inputline) {
+function addLine(id, timestamp, inputline, addedlocally) {
   // local only! this also gets called when we get a line back from the server
   var classes = "";
   var rowclasses= "";
   var important = "";
 
+  if (addedlocally) rowclasses = rowclasses + " addedlocally";
   if (inputline.indexOf("!!") > -1) {
     important = "<i class=\"icon-star\"></i>";
     classes = classes + " importantline";
@@ -68,8 +85,8 @@ function addLine(id, timestamp, inputline) {
     rowclasses = rowclasses + " confusingrow";
   }
   $('#notelog').append(
-    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + timestamp.toLocaleTimeString() +
-    "</td><td>" + confusing + important + 
+    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
+    "</td><td>" + timestamp.toLocaleTimeString() +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
@@ -85,7 +102,7 @@ $(document).ready(function() {
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
       // id only applies to things pulled from surver
-      addLine(null, timestamp, inputline);
+      addLine(null, timestamp, inputline, true);
       $('#noteinput').val('');
       sendLineToServer(inputline);
     }
