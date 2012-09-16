@@ -6,7 +6,7 @@ class Note < ActiveRecord::Base
   def as_json(options = nil)
     {
       :id => id,
-      :timestamp => created_at.to_time.to_i,
+      :timestamp => created_at.to_time.to_i*1000,
       :text => text
     }
   end

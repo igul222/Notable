@@ -6,13 +6,16 @@ $.ajaxSetup({
 
 function getRelevantLines(timestamp, originaltarget) {
   var url = window.related_lecture_notes_url;
-  $.get(url, {timestamp: timestamp}, function(data) {formatRelevantLines(data, originaltarget)}, "json");
+  $.get(url, {timestamp: timestamp.getTime()}, function(data) {
+    originaltarget.addClass('selectedline');
+    originaltarget.children(':last').append(data);
+  });
 }
 
-function formatRelevantLines(context, originaltarget) {
+function formatRelevantLines(context, timestamp, originaltarget) {
   if (context) {
     originaltarget.addClass('selectedline');
-    originaltarget.after("<div class=\"muted\" id=relevantlines"+timestamp+"></div>");
+    originaltarget.after("<div class=\"muted\" id='relevantlines"+timestamp+"'></div>");
     context.map(function(line) {
       $('#relevantlines'+line.timestamp).appendChild(
         formatTime(new Date(line.timestamp)) + " " + line.text + " -- " 
