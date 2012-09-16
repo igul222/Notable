@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
   belongs_to :lecture
-  validates :text, :presence => true, :length => {:minimum => 2}
+  validates :text, :presence => true
   attr_accessible :text
 
   def as_json(options = nil)
