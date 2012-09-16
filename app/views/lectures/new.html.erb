@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="span12">
+      <div class="page-header">
+        <h1>New Lecture</h1>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for @lecture do |f| %>
+      <%= f.label :title %>
+      <%= f.text_field :title, :style => 'width: 925px; font-size: 180%; padding: 12px' %>
+      <button type="submit" class="btn btn-primary"><i class="icon-file icon-white"></i> Create</button>
+    <% end %>
+  </div>
+</div>
