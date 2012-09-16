@@ -2,7 +2,7 @@ class LecturesController < ApplicationController
   before_filter :user_signed_in?
 
   def index
-    @lectures = current_user.lectures
+    @lectures = current_user.lectures.all(:order => 'created_at DESC')
   
     if params[:phone_number]
       current_user.phone_number = params[:phone_number]
