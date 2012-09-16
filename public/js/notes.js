@@ -44,11 +44,14 @@ function addLine(id, timestamp, inputline, addedlocally) {
   }
   $('#notelog').append(
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td class='muted'>" + formatTime(timestamp) +
+    "</td><td id=\"timestamp" + timestamp + "\" class='muted'>" + formatTime(timestamp) +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
   );
+  if ($('#player').length > 0) {
+  	$('#timestamp'+timestamp).on('click', function() {$('#player').currentTime(timestamp - window.audio_timestamp)/1000});
+  }
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
 
   // // only get resources if marked as confusing
