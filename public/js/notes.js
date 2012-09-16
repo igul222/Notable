@@ -139,9 +139,13 @@ $(document).ready(function() {
     var target = $('#'+id);
     if (target.hasClass('selectedline')) return;
     var clickedline = lines[id.substring(3)];
+    getRelevantLines(clickedline.timestamp, target)
   });
+
+
   $('#showall').on('click', function() {setShownTypes('all')});
   $('#showimportant').on('click', function() {setShownTypes('important')});
   $('#showconfusing').on('click', function() {setShownTypes('confusing')});
   pollForUpdates();
+
 });
