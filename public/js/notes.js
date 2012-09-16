@@ -4,26 +4,64 @@ $.ajaxSetup({
   }
 });
 
-function getRelevantLines(timestamp, s, originaltarget) {
+function getRelevantLines(timestamp, originaltarget) {
   var url = window.related_lecture_notes_url;
-  $.get(url, {timestamp: timestamp, s: s}, function(data) {formatRelevantLines(data, originaltarget)});
+  $.get(url, {timestamp: timestamp}, function(data) {formatRelevantLines(data, originaltarget)}, "json");
 }
 
 function formatRelevantLines(context, originaltarget) {
   if (context) {
     originaltarget.addClass('selectedline');
     originaltarget.after("<div class=\"muted\" id=relevantlines"+timestamp+"></div>");
-    originaltarget.addClass("btn");
-    originaltarget.attr('data-toggle','collapse');
-    originaltarget.attr('data-target','#relevantlines'+timestamp);
     context.map(function(line) {
-      var timestamp = new Date(line.timestamp);
-      $('#relevantlines'+timestamp).appendChild(
-        formatTime(timestamp) + " " + line.text + " -- " 
+      $('#relevantlines'+line.timestamp).appendChild(
+        formatTime(new Date(line.timestamp)) + " " + line.text + " -- " 
       + line.user);
     });
   }
 }
+
+function addLine(id, timestamp, inputline, addedlocally) {
+  // local only! this also gets called when we get a line back from the server
+  var classes = "";
+  var rowclasses= "";
+  var important = "";
+
+  if (addedlocally) rowclasses = rowclasses + " addedlocally";
+  if (inputline.indexOf("!!") > -1) {
+    important = "<i class=\"icon-star\"></i>";
+    classes = classes + " importantline";
+    rowclasses = rowclasses + " importantrow";
+  }
+  var confusing = "";
+  if (inputline.indexOf("??") > -1) {
+    confusing = "<i class=\"icon-question-sign\"></i>";
+    classes = classes + " text-error";
+    rowclasses = rowclasses + " confusingrow";
+  }
+  $('#notelog').append(
+    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
+    "</td><td class='muted'>" + formatTime(timestamp) +
+    "</td><td class=\"" + classes + "\">" +
+    inputline +
+    "</td></tr>"
+  );
+  lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
+
+  // // only get resources if marked as confusing
+  // if (confusing != "") {
+  //   // very sophisticated keyword extraction algorithm >_>
+  //   var keyword = inputline.split(" ").sort(
+  //     function(a, b) { return b.length - a.length })[0];
+  //   console.log(keyword);
+  //   $.getJSON("http://api.springer.com/metadata/jsonp?q=" + "galois" + "&api_Key=" + "a6gkhpf9u4xsw62xc5bmkfpc" + "&callback=?", function (data) {
+  //     console.log(data);
+  //   });
+  // }
+  // add little accordiony thing with relevant other notes
+  //getRelevantLines(timestamp, $('#row'+(lines.length-1)));
+}
+
 
 /**
  * handles the dropdown to hide certain types of lines
@@ -84,48 +122,6 @@ function formatTime(time) {
   return time.toTimeString().match(/^[0-9]{2}:[0-9]{2}/);
 }
 
-function addLine(id, timestamp, inputline, addedlocally) {
-  // local only! this also gets called when we get a line back from the server
-  var classes = "";
-  var rowclasses= "";
-  var important = "";
-
-  if (addedlocally) rowclasses = rowclasses + " addedlocally";
-  if (inputline.indexOf("!!") > -1) {
-    important = "<i class=\"icon-star\"></i>";
-    classes = classes + " importantline";
-    rowclasses = rowclasses + " importantrow";
-  }
-  var confusing = "";
-  if (inputline.indexOf("??") > -1) {
-    confusing = "<i class=\"icon-question-sign\"></i>";
-    classes = classes + " text-error";
-    rowclasses = rowclasses + " confusingrow";
-  }
-  $('#notelog').append(
-    "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td class='muted'>" + formatTime(timestamp) +
-    "</td><td class=\"" + classes + "\">" +
-    "<button type=\"button\">"+
-    inputline + "</button>"+
-    "</td></tr>"
-  );
-  lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
-
-  // only get resources if marked as confusing
-  if (confusing != "") {
-    // very sophisticated keyword extraction algorithm >_>
-    var keyword = inputline.split(" ").sort(
-      function(a, b) { return b.length - a.length })[0];
-    console.log(keyword);
-    $.getJSON("http://api.springer.com/metadata/jsonp?q=" + "galois" + "&api_Key=" + "a6gkhpf9u4xsw62xc5bmkfpc" + "&callback=?", function (data) {
-      console.log(data);
-    });
-  }
-  // add little accordiony thing with relevant other notes
-  getRelevantLines(timestamp, inputline, $('#row'+(lines.length-1)));
-}
-
 $(document).ready(function() {
   lines = []; // GLOBAL. :(
   lastupdatetimestamp = 0;
@@ -143,7 +139,6 @@ $(document).ready(function() {
     var target = $('#'+id);
     if (target.hasClass('selectedline')) return;
     var clickedline = lines[id.substring(3)];
-    var context = getRelevantLines(clickedline.timestamp, clickedline.text);
   });
   $('#showall').on('click', function() {setShownTypes('all')});
   $('#showimportant').on('click', function() {setShownTypes('important')});
