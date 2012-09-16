@@ -68,6 +68,10 @@ function sendLineToServer(text) {
   });
 }
 
+function formatTime(time) {
+  return time.toTimeString().match(/^[0-9]{2}:[0-9]{2}/);
+}
+
 function addLine(id, timestamp, inputline, addedlocally) {
   // local only! this also gets called when we get a line back from the server
   var classes = "";
@@ -88,7 +92,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
   }
   $('#notelog').append(
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td class='muted'>" + timestamp.toLocaleTimeString().slice(0,-7) +
+    "</td><td class='muted'>" + formatTime(timestamp) +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
@@ -139,7 +143,7 @@ console.log('timestamp: '+line.timestamp);
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).before(
           "<tr class=\"muted\"><td></td><td>" + 
-          timestamp.toLocaleTimeString() + 
+          formatTime(timestamp) + 
           "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
@@ -147,7 +151,7 @@ console.log('timestamp: '+line.timestamp);
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).after(
           "<tr class=\"muted\"><td></td><td>" + 
-          timestamp.toLocaleTimeString() + 
+          formatTime(timestamp) + 
           "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
