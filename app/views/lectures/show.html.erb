@@ -7,6 +7,7 @@
 <script src="/js/notes.js"></script>
 <%= javascript_tag "
 window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';
+window.related_lecture_notes_url = '#{related_lecture_notes_url(@lecture)}';
 " %>
 <div class="row">
   <div class="span12">
