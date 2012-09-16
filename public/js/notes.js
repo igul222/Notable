@@ -106,7 +106,8 @@ function addLine(id, timestamp, inputline, addedlocally) {
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
     "</td><td class='muted'>" + formatTime(timestamp) +
     "</td><td class=\"" + classes + "\">" +
-    inputline +
+    "<button type=\"button\">"+
+    inputline + "</button>"+
     "</td></tr>"
   );
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
