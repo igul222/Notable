@@ -5,12 +5,10 @@ $.ajaxSetup({
 });
 
 function getRelevantLines(timestamp, s) {
-  return [
-    {timestamp: 1347691044295, user: 'Everyone', text: 'arglegarble'},
-    {timestamp: 1347691044999, user: 'Everyone', text: 'This makes complete sense'},
-    {timestamp: 1347691041111, user: 'Bob', text: 'no it doesn\'t'},
-    {timestamp: 1347791041111, user: 'Bob', text: 'I\'M FROM THE FUTURE'}
-  ];
+  var url = window.related_lecture_notes_url;
+  var that = this; // jank to pass scope out
+  $.get(url, {timestamp: timestamp, s: s}, function(data) {that.relevantlines = data} );
+  return this.relevantlines;
 }
 
 /**
