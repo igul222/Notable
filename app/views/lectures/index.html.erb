@@ -10,26 +10,24 @@
 </style>
 
 <div class="row">
-  <div class="span12">
-    <h1>Your Lectures</h1>
-  </div>
-</div>
+  <% if !current_user.phone_number %>
+    <div class="span3">
+      <h3>Hey there!</h3>
+  		<p><strong>Enter your phone number</strong> below to take notes from your phone!</p>
+      <%= form_tag(lectures_path, :method => 'GET') do %>
+  			<%= text_field_tag :phone_number, current_user.phone_number, :placeholder => '(212) 555-1212' %>
+  			<%= submit_tag 'Save', :class => 'btn btn-success' %>
+  		<% end %>
+    </div>
+  <% end %>
 
-<div class="row">
-  <div class="span12">
+	<div class="span<%= current_user.phone_number ? 12 : 9 %>">
+    <div class="page-header">
+      <h1>Your Lectures</h1>
+    </div>
+
     <%= button_to '<i class="icon-plus"></i> New lecture', new_lecture_path %>
-  </div>
-</div>
 
-<div class="row">
-  <div class="span3">
-		<%= form_for(user) do |f| %>
-			<%= f.label user.phone_number %>
-			<%= f.text_field user.phone_number %>
-			<%= f.submit 'Done'%>
-		<% end %>
-	</div>	
-  <div class="span9">
     <% for lecture in @lectures %>
       <div class="lecture">
         <%= link_to lecture.title, lecture_path(lecture)%>

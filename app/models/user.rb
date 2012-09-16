@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
   
   def phone_number=(new_phone_number)
-    super.phone_number = '+1'+new_phone_number.gsub(/[^0-9]/,'')
+    write_attribute(:phone_number, '+1'+new_phone_number.gsub(/[^0-9]/,''))
   end
 
 end

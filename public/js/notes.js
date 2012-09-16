@@ -86,7 +86,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
   }
   $('#notelog').append(
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td>" + timestamp.toLocaleTimeString() +
+    "</td><td class='muted'>" + timestamp.toLocaleTimeString().slice(0,-7) +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
@@ -97,15 +97,9 @@ function addLine(id, timestamp, inputline, addedlocally) {
   var keyword = inputline.split(" ").sort(
     function(a, b) { return b.length - a.length })[0];
   console.log(keyword);
-  $.post(
-    'http://api.nature.com/query',
-    { query: 'select * where { ?doi a npg:Article . ?doi dc:title ?term . ?term npgx:any "' + keyword + '" . }',
-     output: 'sparql_json' },
-    function (data) {
-     console.log(data);
-    },
-    'json'
-  );
+  $.getJSON("http://api.springer.com/metadata/jsonp?q=" + "galois" + "&api_Key=" + "a6gkhpf9u4xsw62xc5bmkfpc" + "&callback=?", function (data) {
+        console.log(data);
+            });
 }
 
 $(document).ready(function() {
@@ -117,8 +111,8 @@ $(document).ready(function() {
       var timestamp = new Date();
       // id only applies to things pulled from surver
       addLine(null, timestamp, inputline, true);
-      $('#noteinput').val('');
       sendLineToServer(inputline);
+      $('#noteinput').val('');
     }
   });
   $(document).on("click", ".noteline", function(e) {

@@ -6,20 +6,15 @@
   <%= csrf_meta_tags %>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/notes.js"></script>
+  <script type="text/javascript" src="//use.typekit.net/gzi5paq.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
   
-  <% [:alert, :notice].each do |key| %>
-    <% if flash[key] %>
-      <p class="alert"><%= flash[key] %></p>
-    <% end %>
-  <% end %>
-
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <%= link_to "Notable", root_path, :class => "brand" %>
+        <%= link_to "NOTABLE", root_path, :class => "brand" %>
         <% if user_signed_in? %>
         	<%= link_to "Sign out", destroy_user_session_path, :class=>'btn btn-primary pull-right' %>
         <% else %>
@@ -32,6 +27,7 @@
   <br/><br/><br/>
 
   <div class="container">
+    <%= flashes %>
     <%= yield %>
   </div>
 
