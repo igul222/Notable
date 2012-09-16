@@ -16,8 +16,9 @@ window.related_lecture_notes_url = '#{related_lecture_notes_url(@lecture)}';
       <h1><%= @lecture.title %></h1>
     </div>
     <% af = TwilioController.get_audio(Time.now,10,current_user) %>
+    <%= javascript_tag "window.audio_timestamp = #{af[:timestamp].to_i*1000};" %>
     <% if af %>
-      <audio src="<%= af.mp3 %>" controls>
+      <audio src="<%= af[:recording].mp3 %>" controls>
       	<p>Boo Hoo, no HTML5 Audio for you</p>
       </audio>
    	<% end %>
