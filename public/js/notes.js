@@ -93,13 +93,16 @@ function addLine(id, timestamp, inputline, addedlocally) {
   );
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
 
-  // very sophisticated keyword extraction algorithm >_>
-  var keyword = inputline.split(" ").sort(
-    function(a, b) { return b.length - a.length })[0];
-  console.log(keyword);
-  $.getJSON("http://api.springer.com/metadata/jsonp?q=" + "galois" + "&api_Key=" + "a6gkhpf9u4xsw62xc5bmkfpc" + "&callback=?", function (data) {
-        console.log(data);
-            });
+  // only get resources if marked as confusing
+  if (confusing != "") {
+    // very sophisticated keyword extraction algorithm >_>
+    var keyword = inputline.split(" ").sort(
+      function(a, b) { return b.length - a.length })[0];
+    console.log(keyword);
+    $.getJSON("http://api.springer.com/metadata/jsonp?q=" + "galois" + "&api_Key=" + "a6gkhpf9u4xsw62xc5bmkfpc" + "&callback=?", function (data) {
+      console.log(data);
+    });
+  }
 }
 
 $(document).ready(function() {
