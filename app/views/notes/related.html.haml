@@ -1,0 +1,27 @@
+%style{:type => 'text/css'} .related-items {list-style-type: none;} .related-items li {margin:10px 0;}
+
+
+%ul.related-items
+  %li.well
+    %img{:src => '/img/book.png', :style => 'width: 48px; padding-right: 10px; float:left'}
+    .right{:style => 'float:left;width:600px;'}
+      - if @ddg
+        .related-ddg
+          = @ddg
+          %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
+          = link_to 'DuckDuckGo', 'https://duckduckgo.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
+      - if @nature
+        .related-nature
+          = @nature
+          %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
+          = link_to 'Nature.com', 'http://nature.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
+    .clear{:style => 'clear: both;'} 
+  - for note in @notes
+    %li.related-note
+      = note.text
+      %span.muted{:style => 'font-family: Georgia; font-style: italic'}
+        &mdash;
+        = note.lecture.user.name
+        at
+        %span{:id => (@rand = rand.to_s)}
+        = javascript_tag "document.getElementById('#{@rand}').innerHTML = formatTime(new Date(#{note.created_at.to_time.to_i*1000}));"
