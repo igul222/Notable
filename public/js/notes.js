@@ -50,7 +50,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
     "</td></tr>"
   );
   if ($('#player').length > 0) {
-  	$('#timestamp'+timestamp).on('click', function() {$('#player').currentTime(timestamp - window.audio_timestamp)/1000});
+  	$('#timestamp'+timestamp.getTime()).on('click', function() {$('#player').currentTime(timestamp.getTime() - window.audio_timestamp)/1000});
   }
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
 
