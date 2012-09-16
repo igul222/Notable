@@ -7,7 +7,11 @@ Pennapp::Application.routes.draw do
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   end
   resources :lectures do
-    resources :notes
+    resources :notes do
+      collection do
+        get 'related'
+      end
+    end
   end
 
   match 'twilio/process_sms' => 'twilio#process_sms'
