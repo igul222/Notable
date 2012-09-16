@@ -25,9 +25,7 @@
     <div class="page-header">
       <h1>Your Lectures</h1>
     </div>
-
-    <%= link_to '<i class="icon-plus"></i> New Lecture'.html_safe, new_lecture_path, :class="btn" %>
-
+    <%= link_to '<i class="icon-plus"></i> New lecture'.html_safe, new_lecture_path, :class => 'btn' %>
     <% for lecture in @lectures %>
       <div class="lecture">
         <%= link_to lecture.title, lecture_path(lecture)%>

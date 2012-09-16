@@ -11,6 +11,10 @@ class LecturesController < ApplicationController
     end
   end
 
+  def new
+    @lecture = current_user.lectures.new
+  end
+
   def show
     @lecture = current_user.lectures.find(params[:id])
   end
