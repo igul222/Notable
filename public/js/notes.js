@@ -18,10 +18,9 @@ function formatRelevantLines(context, originaltarget) {
     originaltarget.attr('data-target','#relevantlines'+timestamp);
     context.map(function(line) {
       var timestamp = new Date(line.timestamp);
-        $('#relevantlines'+timestamp).appendChild(
-          formatTime(timestamp) + " " + line.text + " -- " 
-        + line.user);
-      );
+      $('#relevantlines'+timestamp).appendChild(
+        formatTime(timestamp) + " " + line.text + " -- " 
+      + line.user);
     });
   }
 }
