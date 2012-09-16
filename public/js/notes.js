@@ -4,34 +4,23 @@ $.ajaxSetup({
   }
 });
 
-function getRelevantLines(timestamp, s) {
+function getRelevantLines(timestamp, s, originaltarget) {
   var url = window.related_lecture_notes_url;
-  $.get(url, {timestamp: timestamp, s: s}, function(data) {formatRelevantLines(data)});
+  $.get(url, {timestamp: timestamp, s: s}, function(data) {formatRelevantLines(data, originaltarget)});
 }
 
-function formatRelevantLines(context) {
+function formatRelevantLines(context, originaltarget) {
   if (context) {
     target.addClass('selectedline');
-    var before = context.filter(function (line) {
-      return(+line.timestamp < clickedline.timestamp);
-    });
-    var after = context.filter(function (line) {
-      return(+line.timestamp > clickedline.timestamp);
-    });
-    before.map(function(line) {
+    originaltarget.after("<div class=\"muted\" id=relevantlines"+timestamp+"></div>");
+    originaltarget.addClass("btn");
+    originaltarget.attr('data-toggle','collapse');
+    originaltarget.attr('data-target','#relevantlines'+timestamp);
+    context.map(function(line) {
       var timestamp = new Date(line.timestamp);
-      $('#'+e.currentTarget.id).before(
-        "<tr class=\"muted\"><td></td><td>" + 
-        formatTime(timestamp) + 
-        "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
-      );
-    });
-    after.map(function(line) {
-      var timestamp = new Date(line.timestamp);
-      $('#'+e.currentTarget.id).after(
-        "<tr class=\"muted\"><td></td><td>" + 
-        formatTime(timestamp) + 
-        "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
+        $('#relevantlines'+timestamp).appendChild(
+          formatTime(timestamp) + " " + line.text + " -- " 
+        + line.user);
       );
     });
   }
@@ -133,6 +122,8 @@ function addLine(id, timestamp, inputline, addedlocally) {
       console.log(data);
     });
   }
+  // add little accordiony thing with relevant other notes
+  getRelevantLines(timestamp, inputline, $('#row'+(lines.length-1)));
 }
 
 $(document).ready(function() {
