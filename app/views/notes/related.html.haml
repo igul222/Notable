@@ -2,20 +2,21 @@
 
 
 %ul.related-items
-  %li.well
-    %img{:src => '/img/book.png', :style => 'width: 48px; padding-right: 10px; float:left'}
-    .right{:style => 'float:left;width:600px;'}
-      - if @ddg
-        .related-ddg
-          = @ddg
-          %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
-          = link_to 'DuckDuckGo', 'https://duckduckgo.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
-      - if @nature
-        .related-nature
-          = @nature
-          %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
-          = link_to 'Nature.com', 'http://nature.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
-    .clear{:style => 'clear: both;'} 
+  - if @ddg || @nature
+    %li.well
+      %img{:src => '/img/book.png', :style => 'width: 48px; padding-right: 10px; float:left'}
+      .right{:style => 'float:left;width:600px;'}
+        - if @ddg
+          .related-ddg
+            = @ddg
+            %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
+            = link_to 'DuckDuckGo', 'https://duckduckgo.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
+        - if @nature
+          .related-nature
+            = @nature
+            %span.muted{:style => 'font-family: Georgia; font-style: italic'} via
+            = link_to 'Nature.com', 'http://nature.com', :class => 'muted', :style => 'font-family: Georgia; font-style: italic'
+      .clear{:style => 'clear: both;'} 
   - for note in @notes
     %li.related-note
       = note.text
