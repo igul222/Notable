@@ -6,9 +6,35 @@ $.ajaxSetup({
 
 function getRelevantLines(timestamp, s) {
   var url = window.related_lecture_notes_url;
-  var that = this; // jank to pass scope out
-  $.get(url, {timestamp: timestamp, s: s}, function(data) {that.relevantlines = data} );
-  return this.relevantlines;
+  $.get(url, {timestamp: timestamp, s: s}, function(data) {formatRelevantLines(data)});
+}
+
+function formatRelevantLines(context) {
+  if (context) {
+    target.addClass('selectedline');
+    var before = context.filter(function (line) {
+      return(+line.timestamp < clickedline.timestamp);
+    });
+    var after = context.filter(function (line) {
+      return(+line.timestamp > clickedline.timestamp);
+    });
+    before.map(function(line) {
+      var timestamp = new Date(line.timestamp);
+      $('#'+e.currentTarget.id).before(
+        "<tr class=\"muted\"><td></td><td>" + 
+        formatTime(timestamp) + 
+        "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
+      );
+    });
+    after.map(function(line) {
+      var timestamp = new Date(line.timestamp);
+      $('#'+e.currentTarget.id).after(
+        "<tr class=\"muted\"><td></td><td>" + 
+        formatTime(timestamp) + 
+        "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
+      );
+    });
+  }
 }
 
 /**
@@ -127,33 +153,6 @@ $(document).ready(function() {
     if (target.hasClass('selectedline')) return;
     var clickedline = lines[id.substring(3)];
     var context = getRelevantLines(clickedline.timestamp, clickedline.text);
-    if (context) {
-      target.addClass('selectedline');
-      var before = context.filter(function (line) {
-console.log('timestamp: '+(line.timestamp+0));
-        return(+line.timestamp < clickedline.timestamp);
-      });
-      var after = context.filter(function (line) {
-console.log('timestamp: '+line.timestamp);
-        return(+line.timestamp > clickedline.timestamp);
-      });
-      before.map(function(line) {
-        var timestamp = new Date(line.timestamp);
-        $('#'+e.currentTarget.id).before(
-          "<tr class=\"muted\"><td></td><td>" + 
-          formatTime(timestamp) + 
-          "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
-        );
-      });
-      after.map(function(line) {
-        var timestamp = new Date(line.timestamp);
-        $('#'+e.currentTarget.id).after(
-          "<tr class=\"muted\"><td></td><td>" + 
-          formatTime(timestamp) + 
-          "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
-        );
-      });
-    }
   });
   $('#showall').on('click', function() {setShownTypes('all')});
   $('#showimportant').on('click', function() {setShownTypes('important')});
