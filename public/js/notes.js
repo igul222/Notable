@@ -44,7 +44,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
   }
   $('#notelog').append(
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td id=\"timestamp" + timestamp + "\" class='muted'>" + formatTime(timestamp) +
+    "</td><td id=\"timestamp" + timestamp.getTime() + "\" class='muted'>" + formatTime(timestamp) +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
