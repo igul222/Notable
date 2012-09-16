@@ -10,7 +10,8 @@ window.lecture_notes_url = '#{lecture_notes_url(@lecture)}';
     <div class="page-header">
       <h1><%= @lecture.title %></h1>
     </div>
-
+    <% af=twilio_controller.get_audio(time, interval) %>
+	<audio src="<%= af.mp3 %>" preload="auto" controls></audio>
     <table id="notelog" class="table table-striped">
     <tr id="headerrow">
       <th><div class="btn-group">
