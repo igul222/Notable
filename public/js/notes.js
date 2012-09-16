@@ -54,6 +54,8 @@ function pollForUpdates() {
     }
     $('.addedlocally').hide();
   }, "json");
+  // make mathjax check for new latex
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   lastupdatetimestamp = Date.now() - 10000;
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
