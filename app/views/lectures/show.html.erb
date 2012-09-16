@@ -15,7 +15,10 @@ window.related_lecture_notes_url = '#{related_lecture_notes_url(@lecture)}';
     <div class="page-header">
       <h1><%= @lecture.title %></h1>
     </div>
+    <%= time=Time.now %>
+    <%if af.exists %>
     <% af=TwilioController.get_audio(time, interval) %>
+    <% end %>
 	<audio src="<%= af.mp3 %>" preload="auto" controls></audio>
     <table id="notelog" class="table table-striped">
     <tr id="headerrow">
