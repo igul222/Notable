@@ -115,7 +115,6 @@ $(document).ready(function() {
     if (e.which === 13 && inputline !== '') {
       var timestamp = new Date();
       // id only applies to things pulled from surver
-      addLine(null, timestamp, inputline, true);
       sendLineToServer(inputline);
       $('#noteinput').val('');
     }
