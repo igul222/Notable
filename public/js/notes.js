@@ -4,9 +4,9 @@ $.ajaxSetup({
   }
 });
 
-function getRelevantLines(timestamp, originaltarget) {
+function getRelevantLines(timestamp, originaltarget, text) {
   var url = window.related_lecture_notes_url;
-  $.get(url, {timestamp: timestamp.getTime()}, function(data) {
+  $.get(url, {timestamp: timestamp.getTime(), text: text}, function(data) {
     originaltarget.addClass('selectedline');
     originaltarget.children(':last').append(data);
   });
@@ -142,7 +142,7 @@ $(document).ready(function() {
     var target = $('#'+id);
     if (target.hasClass('selectedline')) return;
     var clickedline = lines[id.substring(3)];
-    getRelevantLines(clickedline.timestamp, target)
+    getRelevantLines(clickedline.timestamp, target, clickedline.text)
   });
 
 

@@ -15,7 +15,7 @@ window.related_lecture_notes_url = '#{related_lecture_notes_url(@lecture)}';
       <h1><%= @lecture.title %></h1>
     </div>
     <% if TwilioController.get_audio(Time.now,current_user,10) != 42 %>
-    <% af => TwilioController.get_audio(Time.now,current_user,10) %>
+    <% af = TwilioController.get_audio(Time.now,current_user,10) %>
     <audio src="<%= af.mp3 %>" controls>
     	<p>Boo Hoo, no HTML5 Audio for you</p>
     </audio>
