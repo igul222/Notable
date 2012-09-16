@@ -16,7 +16,7 @@ window.related_lecture_notes_url = '#{related_lecture_notes_url(@lecture)}';
       <h1><%= @lecture.title %></h1>
     </div>
     <%= time=Time.now %>
-    <%if af.exists %>
+    <% if TwilioController.get_audio(time, interval).exists %>
     <% af=TwilioController.get_audio(time, interval) %>
     <% end %>
 	<audio src="<%= af.mp3 %>" preload="auto" controls></audio>
