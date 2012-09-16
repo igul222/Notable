@@ -86,7 +86,7 @@ function addLine(id, timestamp, inputline, addedlocally) {
   }
   $('#notelog').append(
     "<tr class=\"noteline" + rowclasses + "\" id=\"row"+lines.length+"\"><td>" + confusing + important +
-    "</td><td>" + timestamp.toLocaleTimeString() +
+    "</td><td class='muted'>" + timestamp.toLocaleTimeString().slice(0,-7) +
     "</td><td class=\"" + classes + "\">" +
     inputline +
     "</td></tr>"
@@ -103,8 +103,8 @@ $(document).ready(function() {
       var timestamp = new Date();
       // id only applies to things pulled from surver
       addLine(null, timestamp, inputline, true);
-      $('#noteinput').val('');
       sendLineToServer(inputline);
+      $('#noteinput').val('');
     }
   });
   $(document).on("click", ".noteline", function(e) {
