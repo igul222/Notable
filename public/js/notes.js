@@ -52,8 +52,8 @@ function pollForUpdates() {
         }
       }
     }
+    $('.addedlocally').hide();
   }, "json");
-  $('.addedlocally').hide();
   lastupdatetimestamp = Date.now() - 10000;
   // check again in 1 second
   window.setTimeout(pollForUpdates, 1000);
@@ -92,6 +92,20 @@ function addLine(id, timestamp, inputline, addedlocally) {
     "</td></tr>"
   );
   lines[lines.length] = {id: id, timestamp: timestamp, text: inputline};
+
+  // very sophisticated keyword extraction algorithm >_>
+  var keyword = inputline.split(" ").sort(
+    function(a, b) { return b.length - a.length })[0];
+  console.log(keyword);
+  $.post(
+    'http://api.nature.com/query',
+    { query: 'select * where { ?doi a npg:Article . ?doi dc:title ?term . ?term npgx:any "' + keyword + '" . }',
+     output: 'sparql_json' },
+    function (data) {
+     console.log(data);
+    },
+    'json'
+  );
 }
 
 $(document).ready(function() {
@@ -126,17 +140,17 @@ console.log('timestamp: '+line.timestamp);
       before.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).before(
-          "<tr class=\"muted\"><td>" + 
+          "<tr class=\"muted\"><td></td><td>" + 
           timestamp.toLocaleTimeString() + 
-          "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
+          "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
       after.map(function(line) {
         var timestamp = new Date(line.timestamp);
         $('#'+e.currentTarget.id).after(
-          "<tr class=\"muted\"><td>" + 
+          "<tr class=\"muted\"><td></td><td>" + 
           timestamp.toLocaleTimeString() + 
-          "</td><td></td><td>" + line.text + " -- " + line.user + "</td></tr>"
+          "</td><td>" + line.text + " -- " + line.user + "</td></tr>"
         );
       });
     }
