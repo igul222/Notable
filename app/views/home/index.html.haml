@@ -1,1 +1,25 @@
 %img{:src => '/img/hero-bg.jpg', :style => 'width: 940px; display: block; margin: -10px auto 0 auto'}
+
+
+.row
+  .span4
+    %img{:src => '/iphone.png', :style => 'width: 150px;display:block;margin:20px auto;'}
+    %h2 Take notes however you want.
+    %p Use Notable to take notes from your computer or even from your cell phone by texting.
+  .span4
+    %img{:src => '/webinterface.png', :style => 'width:250px;display:block;margin:20px auto;'}
+    %h2 Add math, audio, and bookmarks.
+    %p Surround your math with dollar signs to use LaTex, or put "??" anywhere in your note to mark that section as confusing.
+  .span4
+    %img{:src => '/Screenshot.png', :style => 'width:250px;display:block;margin:20px auto;'}
+    %h2 Missed something? Don't sweat it.
+    %p We make it easy to see the notes your friends took at the same time, look up explanations on Wikipedia, and even find scholarly sources from Nature.
+
+%br
+%br
+%br
+%br
+
+
+%div{:style => 'text-align:center'}
+  = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :class=>'btn btn-primary btn-large'
