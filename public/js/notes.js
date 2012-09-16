@@ -11,7 +11,7 @@ function getRelevantLines(timestamp, s, originaltarget) {
 
 function formatRelevantLines(context, originaltarget) {
   if (context) {
-    target.addClass('selectedline');
+    originaltarget.addClass('selectedline');
     originaltarget.after("<div class=\"muted\" id=relevantlines"+timestamp+"></div>");
     originaltarget.addClass("btn");
     originaltarget.attr('data-toggle','collapse');
