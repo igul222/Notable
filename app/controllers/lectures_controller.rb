@@ -15,6 +15,17 @@ class LecturesController < ApplicationController
     @lecture = current_user.lectures.new
   end
 
+  def create
+    @lecture = current_user.lectures.new(params[:lecture])
+    if @lecture.save
+      flash[:alert] = "The lecture has been created."
+      redirect_to lectures_path
+    else
+      flash.now[:alert] = "There were errors creating your set."
+      render :action => :new
+    end
+  end
+
   def show
     @lecture = current_user.lectures.find(params[:id])
   end
